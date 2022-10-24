@@ -2,23 +2,20 @@ import time
 import pandas as pd
 import redis
 from flask import Flask
+import logging
 
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
+logging.basicConfig(level=logging.DEBUG)
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
 
 def readCsv():
-    return 'testando'
+    df = pd.read_csv('exemplo.csv')
+    #for x in df:
+        #   app.logger.info(df.iloc[2,2])
+    for index, row in df.iterrows():
+            #app.logger.info(row.Jogo)
+    return df.to_string()
 
 @app.route('/')
 def hello():

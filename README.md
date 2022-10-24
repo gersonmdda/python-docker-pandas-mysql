@@ -14,6 +14,8 @@ $ newgrp docker
 
 https://docs.docker.com/compose/gettingstarted/
 https://www.w3schools.com/python/pandas/default.asp
+https://www.youtube.com/watch?v=VtTd_kArC74
+https://stackoverflow.com/questions/16476924/how-to-iterate-over-rows-in-a-dataframe-in-pandas
 
 
 ##EXECUTAR PROJETO
