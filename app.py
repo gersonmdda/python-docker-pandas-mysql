@@ -3,28 +3,27 @@ import pandas as pd
 import redis
 from flask import Flask
 import logging
-import mysql.connectors
+import mysql.connector
+import os
 
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
 logging.basicConfig(level=logging.DEBUG)
 mydb = mysql.connector.connect(
-  host="0.0.0.0:3388",
-  user="usuario",
-  password="123456",
-  database="game"
+  host=os.environ['MYSQL_ROOT_HOST'],
+  port=os.environ['MYSQL_ROOT_PORT'],
+  user=os.environ['MYSQL_USER'],
+  password=os.environ['MYSQL_ROOT_PASSWORD'],
+  database=os.environ['MYSQL_DATABASE']
 )
 
-#ENV MYSQL_HOST=0.0.0.0:3388
-#ENV MYSQL_USER=usuario
-#ENV MYSQL_PASSWORD=123456
-#ENV MYSQL_DATABADE=game
 
 def connectMysql(row):
     mycursor = mydb.cursor()
-    sql = "INSERT INTO games (jogo, console, status) VALUES (%s, %s, %s, %s)"
+    sql = "INSERT INTO games (jogo, consoles, status) VALUES (%s, %s, %s)"
     val = (row.Jogo, row.Consoles, row.Status)
     mycursor.execute(sql, val)
+    mydb.commit()
 
 
 def readCsv():
